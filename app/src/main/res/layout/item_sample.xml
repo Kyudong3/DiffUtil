@@ -2,12 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="sampleItem"
+            type="com.kyudong.diffutil.model.SampleItem" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:background="#9A9999"
         android:orientation="vertical"
         android:gravity="center_vertical"
@@ -19,20 +21,23 @@
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:gravity="center_vertical"
-            android:textSize="14sp"/>
+            android:textSize="12sp"
+            android:text="@{sampleItem.name}"/>
 
         <TextView
             android:id="@+id/item_age"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:gravity="center_vertical"
-            android:textSize="14sp"/>
+            android:textSize="12sp"
+            android:text="@{String.valueOf(sampleItem.age)}"/>
 
         <TextView
             android:id="@+id/item_career"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:gravity="center_vertical"
-            android:textSize="14sp"/>
+            android:textSize="12sp"
+            android:text="@{String.valueOf(sampleItem.career)}"/>
     </LinearLayout>
 </layout>

@@ -1,41 +1,40 @@
 package com.kyudong.diffutil.ui.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.kyudong.diffutil.databinding.ItemSampleBinding
+import com.kyudong.diffutil.base.BaseAdapter
 import com.kyudong.diffutil.model.SampleItem
+import kotlin.random.Random
 
-class SampleRecyclerViewAdapter(
-    private val sampleItemList: MutableList<SampleItem>
-) : RecyclerView.Adapter<SampleRecyclerViewAdapter.RecyclerViewVH>() {
+class SampleRecyclerViewAdapter : BaseAdapter<SampleItem, SampleRecyclerViewHolder>(DIFF_CALLBACK) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewVH {
-        val binding = ItemSampleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RecyclerViewVH(binding)
+    private val sampleItemList = arrayListOf<SampleItem>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SampleRecyclerViewHolder {
+        return SampleRecyclerViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewVH, position: Int) {
-        holder.bind(sampleItemList[position])
+    fun addItem(name: String) {
+        val sampleItem = SampleItem(name, (Random.nextInt(0, 30)), Random.nextInt(0, 10))
+        sampleItemList.add(sampleItem)
+        submitList(sampleItemList.toMutableList())
     }
 
-    override fun getItemCount(): Int = sampleItemList.size
-
-    inner class RecyclerViewVH(private val binding: ItemSampleBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: SampleItem) {
-            binding.executePendingBindings()
+    fun removeLastItem() {
+        if (sampleItemList.isNotEmpty()) {
+            sampleItemList.remove(sampleItemList[sampleItemList.size - 1])
+            submitList(sampleItemList.toMutableList())
         }
     }
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SampleItem>() {
             override fun areItemsTheSame(oldItem: SampleItem, newItem: SampleItem): Boolean {
-                TODO("Not yet implemented")
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: SampleItem, newItem: SampleItem): Boolean {
-                TODO("Not yet implemented")
+                return oldItem == newItem
             }
         }
     }

@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindLayout()
         setAdapter()
+        addItem()
+        addRemoveItem()
     }
 
     private fun bindLayout() {
@@ -29,10 +31,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAdapter() {
         sampleItemList = arrayListOf()
-        sampleRvAdapter = SampleRecyclerViewAdapter(sampleItemList)
+        sampleRvAdapter = SampleRecyclerViewAdapter()
         binding.listRv.run {
-            layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = sampleRvAdapter
+        }
+    }
+
+    private fun addItem() {
+        binding.btnAdd.setOnClickListener {
+            sampleRvAdapter.addItem(binding.textName.text.toString())
+            binding.textName.setText("")
+        }
+    }
+
+    private fun addRemoveItem() {
+        binding.btnRemove.setOnClickListener {
+            sampleRvAdapter.removeLastItem()
         }
     }
 }
